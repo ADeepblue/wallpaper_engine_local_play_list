@@ -1,0 +1,24 @@
+{
+  "title": "本地图片循环播放壁纸",
+  "description": "自动读取当前目录图片并循环播放",
+  "type": "web",
+  "file": "index.html",
+  "general": {
+    "properties": {
+      "interval": {
+        "text": "切换时间间隔 (秒)",
+        "type": "slider",
+        "min": 1,
+        "max": 300,
+        "value": 10
+      },
+      "fade": {
+        "text": "渐变淡入淡出时间 (秒)",
+        "type": "slider",
+        "min": 0,
+        "max": 5,
+        "value": 1
+      }
+    }
+  }
+}
