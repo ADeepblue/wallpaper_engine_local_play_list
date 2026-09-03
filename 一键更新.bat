@@ -1,13 +1,18 @@
 @echo off
 title 壁纸列表更新器
 
-echo [1/2] 正在扫描当前目录的图片...
+:: 如果 img 文件夹不存在，则自动创建一个
+if not exist "img" (
+    mkdir "img"
+)
 
-:: 完全避免在命令行中使用 > 或 < 等特殊重定向符号，改用安全的纯文本拼接与文件写入
+echo [1/2] 正在扫描 img 目录下的图片...
+
+:: 使用 PowerShell 扫描 img 文件夹下的图片，并自动带上 img/ 路径前缀
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
     "$htmlPath = 'index.html';" ^
     "$exts = @('.png','.jpg','.jpeg','.bmp','.gif','.webp');" ^
-    "$files = Get-ChildItem -File | Where-Object { $exts -contains $_.Extension.ToLower() } | ForEach-Object { \"'\" + $_.Name + \"'\" };" ^
+    "$files = Get-ChildItem -LiteralPath 'img' -File | Where-Object { $exts -contains $_.Extension.ToLower() } | ForEach-Object { \"'img/\" + $_.Name + \"'\" };" ^
     "$arrStr = [string]::Join(', ', $files);" ^
     "$content = Get-Content -LiteralPath $htmlPath -Raw -Encoding utf8;" ^
     "$startTag = '<!--IMAGE_LIST_START-->';" ^
@@ -24,7 +29,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
     "}"
 
 if %errorlevel% equ 0 (
-    echo [2/2] 更新成功！已将最新图片列表写入 index.html
+    echo [2/2] 更新成功！已将 img 目录下的图片列表写入 index.html
 ) else (
     echo [2/2] 更新失败，请检查 index.html 中是否存在 IMAGE_LIST 标记或文件是否被占用。
 )
