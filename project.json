@@ -18,6 +18,20 @@
         "min": 0,
         "max": 5,
         "value": 1
+      },
+      "playMode": {
+        "text": "播放模式",
+        "type": "combo",
+        "options": {
+          "order": "顺序播放",
+          "shuffle": "随机乱序"
+        },
+        "value": "order"
+      },
+      "autoPlay": {
+        "text": "自动播放",
+        "type": "bool",
+        "value": true
       }
     }
   }
