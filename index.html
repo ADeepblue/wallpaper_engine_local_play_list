@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: sans-serif; }
         
-        /* 壁纸层：使用 contain 确保留黑边、不拉伸 */
         .slide {
             position: absolute;
             width: 100%;
@@ -20,7 +19,6 @@
         }
         .active { opacity: 1; }
 
-        /* 底部控制栏外壳：鼠标移到中下方时触发显示 */
         #control-trigger {
             position: absolute;
             bottom: 0;
@@ -32,8 +30,7 @@
             justify-content: center;
             align-items: center;
         }
-        
-        /* 控制面板样式 */
+
         #control-panel {
             display: flex;
             align-items: center;
@@ -47,14 +44,12 @@
             transform: translateY(20px);
             transition: all 0.3s ease;
         }
-        
-        /* 鼠标悬停触发区域时，显示控制栏 */
+
         #control-trigger:hover #control-panel {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* 按钮通用样式 */
         .btn {
             background: none;
             border: none;
@@ -89,27 +84,15 @@
     </div>
 
     <script>
-        // ==========================================
-        // 🛠️ 唯一需要你手动修改的地方 🛠️
-        // 如果你后续增加了 3.png, 4.jpg，只需要在这里照猫画虎加上去即可！
-        // ==========================================
-        const rawImages = [
-            '1.png',
-            '2.png'
-        ];
-        // ==========================================
-
-        let playlist = [];        // 实际播放列表（根据顺序/随机生成）
+        let playlist = [];
         let currentIndex = 0;
         let isBg1Active = true;
         let slideshowTimer = null;
 
-        // WE绑定的配置变量
         let cfgAutoPlay = true;
         let cfgInterval = 10000;
-        let cfgPlayMode = 'shuffle'; 
+        let cfgPlayMode = 'shuffle';
 
-        // 1. 根据 WE 设置初始化播放列表
         function initPlaylist() {
             if (rawImages.length === 0) return;
             let currentTrack = playlist[currentIndex] || rawImages[0];
@@ -129,7 +112,6 @@
             currentIndex = newIdx !== -1 ? newIdx : 0;
         }
 
-        // 2. 核心切换函数
         function switchSlide(direction = 1) {
             if (playlist.length === 0) return;
 
@@ -139,19 +121,18 @@
             const activeEl = document.getElementById(isBg1Active ? 'bg1' : 'bg2');
             const inactiveEl = document.getElementById(isBg1Active ? 'bg2' : 'bg1');
 
-            inactiveEl.style.backgroundImage = `url('${nextImgUrl}')`;
+            inactiveEl.style.backgroundImage = `url('${encodeURI(nextImgUrl)}')`;
             inactiveEl.classList.add('active');
             activeEl.classList.remove('active');
 
             isBg1Active = !isBg1Active;
         }
 
-        // 3. 自动化定时器控制
         function startSlideshow() {
             clearInterval(slideshowTimer);
-            
+
             if (playlist.length > 0) {
-                document.getElementById('bg1').style.backgroundImage = `url('${playlist[currentIndex]}')`;
+                document.getElementById('bg1').style.backgroundImage = `url('${encodeURI(playlist[currentIndex])}')`;
             }
 
             if (cfgAutoPlay && playlist.length > 1) {
@@ -164,10 +145,9 @@
             }
         }
 
-        // 4. 底部按钮交互
         document.getElementById('prev-btn').addEventListener('click', () => {
             switchSlide(-1);
-            if (cfgAutoPlay) startSlideshow(); 
+            if (cfgAutoPlay) startSlideshow();
         });
 
         document.getElementById('next-btn').addEventListener('click', () => {
@@ -180,21 +160,16 @@
             startSlideshow();
         });
 
-        // 5. 监听并实时响应 Wallpaper Engine 内部的开关和滑块配置
         window.wallpaperPropertyListener = {
             applyUserProperties: function(properties) {
                 let needReinit = false;
 
-                if (properties.autoPlay) {
-                    cfgAutoPlay = properties.autoPlay.value;
-                }
-                if (properties.interval) {
-                    cfgInterval = properties.interval.value * 1000;
-                }
+                if (properties.autoPlay) cfgAutoPlay = properties.autoPlay.value;
+                if (properties.interval) cfgInterval = properties.interval.value * 1000;
                 if (properties.playMode) {
                     if (cfgPlayMode !== properties.playMode.value) {
                         cfgPlayMode = properties.playMode.value;
-                        needReinit = true; 
+                        needReinit = true;
                     }
                 }
                 if (properties.fade) {
@@ -203,16 +178,20 @@
                     document.getElementById('bg2').style.transition = `opacity ${fadeTime}s ease-in-out`;
                 }
 
-                if (rawImages.length > 0) {
+                if (typeof rawImages !== 'undefined' && rawImages.length > 0) {
                     if (needReinit) initPlaylist();
                     startSlideshow();
                 }
             }
         };
 
-        // 立即初始化
-        initPlaylist();
-        startSlideshow();
+        // 脚本执行入口
+        if (typeof rawImages !== 'undefined' && rawImages.length > 0) {
+            initPlaylist();
+            startSlideshow();
+        }
     </script>
 </body>
 </html>
+<!--IMAGE_LIST_START-->
+<script>const rawImages = ['HaNari001.png','HaNari002.png','HaNari003.png','HaNari004.png','HaNari005.png','HaNari006.png','HaNari007.png','HaNari008.png','HaNari009.png','HaNari010.png','HaNari011.png','HaNari012.png','HaNari013.png','HaNari014.png','HaNari015.png','HaNari016.png','HaNari017.png','HaNari018.png','HaNari019.png','HaNari020.png','HaNari021.png','HaNari022.png','HaNari023.png','HaNari024.png','HaNari025.png','HaNari026.png','HaNari027.png','HaNari028.png','HaNari029.png','HaNari030.png','HaNari031.png','HaNari032.png','HaNari033.png','HaNari034.png','HaNari035.png','HaNari036.png','HaNari037.png','HaNari038.png','HaNari039.png','HaNari040.png','HaNari041.png','HaNari042.png','HaNari043.png','HaNari044.png','HaNari045.png','HaNari046.png','HaNari047.png','HaNari048.png','HaNari049.png','HaNari050.png','HaNari051.png','HaNari052.png','HaNari053.png','HaNari054.png','HaNari055.png','HaNari056.png','HaNari057.png','HaNari058.png','HaNari059.png','HaNari060.png','HaNari061.png','HaNari062.png','HaNari063.png','HaNari064.png','HaNari065.png','HaNari066.png','HaNari067.png','HaNari068.png','HaNari069.png','HaNari070.png','HaNari071.png','HaNari072.png','HaNari073.png','HaNari074.png','HaNari075.png','HaNari076.png','HaNari077.png','HaNari078.png','HaNari079.png','HaNari080.png','HaNari081.png','HaNari082.png','HaNari083.png','HaNari084.png','HaNari085.png','HaNari086.png','HaNari087.png','HaNari088.png','HaNari089.png','HaNari090.png','HaNari091.png','HaNari092.png','HaNari093.png','HaNari094.png','HaNari095.png','HaNari096.png','HaNari097.png','HaNari098.png','HaNari099.png','HaNari100.png','HaNari101.png','HaNari102.png','HaNari103.png','HaNari104.png','HaNari105.png','HaNari106.png','HaNari107.png','HaNari108.png','HaNari109.png','HaNari110.png','HaNari111.png','HaNari112.png','HaNari113.png','HaNari114.png','HaNari115.png','HaNari116.png','HaNari117.png','HaNari118.png','HaNari119.png','HaNari120.png','HaNari121.png','HaNari122.png','HaNari123.png','HaNari124.png','HaNari125.png','HaNari126.png','HaNari127.png','HaNari128.png','HaNari129.png','HaNari130.png','HaNari131.png','HaNari132.png','HaNari133.png','HaNari134.png','HaNari135.png','HaNari136.png','HaNari137.png','HaNari138.png','HaNari139.png','HaNari140.png','HaNari141.png','HaNari142.png','HaNari143.png','HaNari144.png','HaNari145.png','HaNari146.png','HaNari147.png','HaNari148.png','HaNari149.png','HaNari150.png','HaNari151.png','HaNari152.png'];</script>
