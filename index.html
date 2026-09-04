@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -20,17 +20,18 @@
         }
         .active { opacity: 1; }
 
-        /* 底部控制栏外壳：鼠标移到中下方时触发显示 */
+        /* 底部控制栏外壳：提高触发高度并增加底边距，彻底解决 Windows 任务栏遮挡问题 */
         #control-trigger {
             position: absolute;
             bottom: 0;
-            left: 25%;
-            width: 50%;
-            height: 100px;
+            left: 15%;
+            width: 70%;
+            height: 140px;
             z-index: 10;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
+            padding-bottom: 50px; /* 避开 Windows 任务栏（约 40-50px） */
         }
 
         /* 控制面板样式 */
@@ -38,14 +39,15 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             padding: 12px 25px;
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.3s ease;
+            pointer-events: auto;
         }
 
         /* 鼠标悬停触发区域时，显示控制栏 */
@@ -68,6 +70,7 @@
             align-items: center;
             border-radius: 50%;
             transition: background 0.2s;
+            user-select: none;
         }
         .btn:hover { background: rgba(255, 255, 255, 0.2); }
         .btn:active { transform: scale(0.95); }
@@ -82,16 +85,16 @@
     <!-- 底部悬浮控制栏 -->
     <div id="control-trigger">
         <div id="control-panel">
-            <button class="btn" id="prev-btn" title="上一张">⏮</button>
-            <button class="btn" id="play-btn" title="播放/暂停">⏸</button>
-            <button class="btn" id="next-btn" title="下一张">⏭</button>
+            <button class="btn" id="prev-btn" title="上一张 (← / PageUp / 向上滚动)">⏮</button>
+            <button class="btn" id="play-btn" title="播放/暂停 (空格)">⏸</button>
+            <button class="btn" id="next-btn" title="下一张 (→ / PageDown / 向下滚动)">⏭</button>
         </div>
     </div>
 
     <!-- 动态图片列表注入区块（图片存放在 img/ 目录下） -->
     <!--IMAGE_LIST_START-->
 <script id="imageList">
-    const rawImages = ['img/1.png', 'img/2.png', 'img/HaNari001.png', 'img/HaNari002.png', 'img/HaNari003.png', 'img/HaNari004.png', 'img/HaNari005.png', 'img/HaNari006.png', 'img/HaNari007.png', 'img/HaNari008.png', 'img/HaNari009.png', 'img/HaNari010.png', 'img/HaNari011.png', 'img/HaNari012.png', 'img/HaNari013.png', 'img/HaNari014.png', 'img/HaNari015.png', 'img/HaNari016.png', 'img/HaNari017.png', 'img/HaNari018.png', 'img/HaNari019.png', 'img/HaNari020.png', 'img/HaNari021.png', 'img/HaNari022.png', 'img/HaNari023.png', 'img/HaNari024.png', 'img/HaNari025.png', 'img/HaNari026.png', 'img/HaNari027.png', 'img/HaNari028.png', 'img/HaNari029.png', 'img/HaNari030.png', 'img/HaNari031.png', 'img/HaNari032.png', 'img/HaNari033.png', 'img/HaNari034.png', 'img/HaNari035.png', 'img/HaNari036.png', 'img/HaNari037.png', 'img/HaNari038.png', 'img/HaNari039.png', 'img/HaNari040.png', 'img/HaNari041.png', 'img/HaNari042.png', 'img/HaNari043.png', 'img/HaNari044.png', 'img/HaNari045.png', 'img/HaNari046.png', 'img/HaNari047.png', 'img/HaNari048.png', 'img/HaNari049.png', 'img/HaNari050.png', 'img/HaNari051.png', 'img/HaNari052.png', 'img/HaNari053.png', 'img/HaNari054.png', 'img/HaNari055.png', 'img/HaNari056.png', 'img/HaNari057.png', 'img/HaNari058.png', 'img/HaNari059.png', 'img/HaNari060.png', 'img/HaNari061.png', 'img/HaNari062.png', 'img/HaNari063.png', 'img/HaNari064.png', 'img/HaNari065.png', 'img/HaNari066.png', 'img/HaNari067.png', 'img/HaNari068.png', 'img/HaNari069.png', 'img/HaNari070.png', 'img/HaNari071.png', 'img/HaNari072.png', 'img/HaNari073.png', 'img/HaNari074.png', 'img/HaNari075.png', 'img/HaNari076.png', 'img/HaNari077.png', 'img/HaNari078.png', 'img/HaNari079.png', 'img/HaNari080.png', 'img/HaNari081.png', 'img/HaNari082.png', 'img/HaNari083.png', 'img/HaNari084.png', 'img/HaNari085.png', 'img/HaNari086.png', 'img/HaNari087.png', 'img/HaNari088.png', 'img/HaNari089.png', 'img/HaNari090.png', 'img/HaNari091.png', 'img/HaNari092.png', 'img/HaNari093.png', 'img/HaNari094.png', 'img/HaNari095.png', 'img/HaNari096.png', 'img/HaNari097.png', 'img/HaNari098.png', 'img/HaNari099.png', 'img/HaNari100.png', 'img/HaNari101.png', 'img/HaNari102.png', 'img/HaNari103.png', 'img/HaNari104.png', 'img/HaNari105.png', 'img/HaNari106.png', 'img/HaNari107.png', 'img/HaNari108.png', 'img/HaNari109.png', 'img/HaNari110.png', 'img/HaNari111.png', 'img/HaNari112.png', 'img/HaNari113.png', 'img/HaNari114.png', 'img/HaNari115.png', 'img/HaNari116.png', 'img/HaNari117.png', 'img/HaNari118.png', 'img/HaNari119.png', 'img/HaNari120.png', 'img/HaNari121.png', 'img/HaNari122.png', 'img/HaNari123.png', 'img/HaNari124.png', 'img/HaNari125.png', 'img/HaNari126.png', 'img/HaNari127.png', 'img/HaNari128.png', 'img/HaNari129.png', 'img/HaNari130.png', 'img/HaNari131.png', 'img/HaNari132.png', 'img/HaNari133.png', 'img/HaNari134.png', 'img/HaNari135.png', 'img/HaNari136.png', 'img/HaNari137.png', 'img/HaNari138.png', 'img/HaNari139.png', 'img/HaNari140.png', 'img/HaNari141.png', 'img/HaNari142.png', 'img/HaNari143.png', 'img/HaNari144.png', 'img/HaNari145.png', 'img/HaNari146.png', 'img/HaNari147.png', 'img/HaNari148.png', 'img/HaNari149.png', 'img/HaNari150.png', 'img/HaNari151.png', 'img/HaNari152.png'];
+    const rawImages = ['img/屏幕截图 2025-06-23 160350.png', 'img/屏幕截图 2026-07-07 161910.png'];
 </script>
 <!--IMAGE_LIST_END-->
 
@@ -100,11 +103,17 @@
         let currentIndex = 0;
         let isBg1Active = true;
         let slideshowTimer = null;
+        let isInitialLoad = true;
 
         // WE 绑定的配置变量
         let cfgAutoPlay = true;
         let cfgInterval = 10000;
         let cfgPlayMode = 'order';
+
+        // 安全路径转义（支持特殊字符如 #、?、空格等）
+        function encodeImagePath(path) {
+            return path.split('/').map(segment => encodeURIComponent(segment)).join('/');
+        }
 
         // 1. 根据 WE 设置初始化播放列表
         function initPlaylist() {
@@ -126,12 +135,12 @@
             currentIndex = newIdx !== -1 ? newIdx : 0;
         }
 
-        // 2. 核心切换函数（使用 encodeURI 处理路径）
+        // 2. 核心切换函数
         function switchSlide(direction = 1) {
             if (playlist.length === 0) return;
 
             currentIndex = (currentIndex + direction + playlist.length) % playlist.length;
-            const nextImgUrl = encodeURI(playlist[currentIndex]);
+            const nextImgUrl = encodeImagePath(playlist[currentIndex]);
 
             const activeEl = document.getElementById(isBg1Active ? 'bg1' : 'bg2');
             const inactiveEl = document.getElementById(isBg1Active ? 'bg2' : 'bg1');
@@ -147,8 +156,9 @@
         function startSlideshow() {
             clearInterval(slideshowTimer);
 
-            if (playlist.length > 0) {
-                document.getElementById('bg1').style.backgroundImage = `url('${encodeURI(playlist[currentIndex])}')`;
+            if (isInitialLoad && playlist.length > 0) {
+                document.getElementById('bg1').style.backgroundImage = `url('${encodeImagePath(playlist[currentIndex])}')`;
+                isInitialLoad = false;
             }
 
             if (cfgAutoPlay && playlist.length > 1) {
@@ -177,7 +187,37 @@
             startSlideshow();
         });
 
-        // 5. 监听并实时响应 Wallpaper Engine 内部的开关和配置
+        // 5. 键盘方向键与快捷键交互
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'ArrowUp') {
+                switchSlide(-1);
+                if (cfgAutoPlay) startSlideshow();
+            } else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'ArrowDown') {
+                switchSlide(1);
+                if (cfgAutoPlay) startSlideshow();
+            } else if (e.key === ' ') {
+                cfgAutoPlay = !cfgAutoPlay;
+                startSlideshow();
+            }
+        });
+
+        // 6. 鼠标滚轮切页交互（带防抖）
+        let wheelCooldown = false;
+        window.addEventListener('wheel', (e) => {
+            if (wheelCooldown) return;
+            wheelCooldown = true;
+            setTimeout(() => { wheelCooldown = false; }, 300);
+
+            if (e.deltaY > 0) {
+                switchSlide(1);
+                if (cfgAutoPlay) startSlideshow();
+            } else if (e.deltaY < 0) {
+                switchSlide(-1);
+                if (cfgAutoPlay) startSlideshow();
+            }
+        }, { passive: true });
+
+        // 7. 监听并实时响应 Wallpaper Engine 内部的开关和配置
         window.wallpaperPropertyListener = {
             applyUserProperties: function(properties) {
                 let needReinit = false;

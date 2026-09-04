@@ -22,10 +22,10 @@
       "playMode": {
         "text": "播放模式",
         "type": "combo",
-        "options": {
-          "order": "顺序播放",
-          "shuffle": "随机乱序"
-        },
+        "options": [
+          { "label": "顺序播放", "value": "order" },
+          { "label": "随机乱序", "value": "shuffle" }
+        ],
         "value": "order"
       },
       "autoPlay": {
