@@ -1,4 +1,22 @@
-此为wallpaper engine 更新小播放器的一个说明
-要循环播放的图片请放在本目录下的img文件夹
-另外如果要更改标题的话,一个可以直接修改project.json文件中的"description" : "xxxx",内部的值来更名,也可通过wallpaper engine 壁纸编辑器来做这个,点开壁纸编辑器选中项目后,点击选项卡 编辑-更改项目设置-常规-标题即可更改
-如果要修改预览设置的话,也是在上面的目录,点击选项卡 编辑-更改项目设置-常规-预览图片,wallpaper engine会自动完成预览图片截取
+README
+=============================
+
+![](https://img.shields.io/badge/license-Prosperity_License-blue)&nbsp;![](https://img.shields.io/badge/author-Adeepblue-green)
+
+[**English**](./readme.md) | [简体中文](./readme-zh-cn.md)
+
+# This is a template for wallpaper engine using local folder picture, can 
+
+--------------
+
+**Wallpaper Engine – Slideshow Player Instructions**
+
+- Place all images you want to loop through in the `img` folder located in this directory.
+
+- To change the title of the wallpaper:
+  - **Option 1:** Edit the `project.json` file directly and modify the value of `"description" : "xxxx"` to your desired title.
+  - **Option 2:** Open the wallpaper in the Wallpaper Engine Editor, then go to **Edit → Change Project Settings → General** and change the **Title** field.
+
+- To update the preview thumbnail for your wallpaper:
+  - In the same location (**Edit → Change Project Settings → General**), look for the **Preview Image** section. Wallpaper Engine will automatically capture a preview image for you.
+
